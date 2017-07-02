@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">UsersApplication</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_place">добавить место</string>
+    <string name="user_my_profile">Просмотреть свой профиль</string>
+    <string name="header">заголовок</string>
+    <string name="description">краткое описание</string>
+    <string name="city">город</string>
+    <string name="position">координаты</string>
+    <string name="determinate">определить</string>
+    <string name="load_image">загрузить изображение</string>
+    <string name="add">добавить</string>
+    <string name="reason">причина</string>
+    <string name="time_end">дата окончания</string>
+    <string name="ban">забанить</string>
+    <string name="show_on_map">показать на карте</string>
+    <string name="mail_ad">почтовый адрес</string>
+    <string name="new_pass">новый пароль</string>
+    <string name="conf_pass">подтверждение пароль</string>
+    <string name="name">имя</string>
+    <string name="surname">фамилия</string>
+    <string name="father">отчество</string>
+    <string name="number">номер</string>
+    <string name="nickname">никнейм</string>
+    <string name="update">обновить</string>
+    <string name="register">регистрация</string>
+    <string name="logout">выйти</string>
+    <string name="places">места</string>
+    <string name="edit">редактировать</string>
+</resources>
