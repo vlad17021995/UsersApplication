@@ -123,19 +123,33 @@ public class AddPlaceFragment extends DialogFragment implements View.OnClickList
         if (resultCode == Activity.RESULT_OK){
             switch (requestCode){
                 case PLACE_PICKER_REQUEST:
-                    com.google.android.gms.location.places.Place place = PlacePicker.getPlace(data, getActivity());
-                    Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
-                    List<Address> addresses = null;
-                    try {
-                        addresses = geocoder.getFromLocation(place.getLatLng().latitude, place.getLatLng().longitude, 1);
-                        if (addresses != null) {
-                            Address address = addresses.get(0);
-                            city_edit_text.setText(address.getAddressLine(1));
-                            position_edit_text.setText(place.getLatLng().latitude + " " + place.getLatLng().longitude);
+                    final com.google.android.gms.location.places.Place place = PlacePicker.getPlace(data, getActivity());
+                    Thread t = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+                            List<Address> addresses = null;
+                            try {
+                                addresses = geocoder.getFromLocation(place.getLatLng().latitude, place.getLatLng().longitude, 1);
+                                if (addresses != null) {
+                                    final Address address = addresses.get(0);
+                                    if ((city_edit_text != null) && (position_edit_text != null)){
+                                        getActivity().runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                city_edit_text.setText(address.getAddressLine(1));
+                                                position_edit_text.setText(place.getLatLng().latitude + " " + place.getLatLng().longitude);
+                                            }
+                                        });
+                                    }
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    });
+                    t.start();
+
                     break;
                 case SELECT_PHOTO:
                     Uri selectedImage = data.getData();

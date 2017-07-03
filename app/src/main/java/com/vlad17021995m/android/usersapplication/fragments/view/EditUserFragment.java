@@ -98,22 +98,47 @@ public class EditUserFragment extends DialogFragment implements View.OnClickList
         return view;
     }
 
+    @Override
+    public void onPause() {
+        locationManager.removeUpdates(locationListener);
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000 * 10, 10, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000 * 10, 10, locationListener);
+    }
 
     private LocationListener locationListener = new LocationListener() {
         @Override
-        public void onLocationChanged(Location location) {
+        public void onLocationChanged(final Location location) {
             //city_edit_text.setText(location.getLatitude() + " : " + location.getLongitude());
             locationManager.removeUpdates(locationListener);
-            Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
-            try {
-                List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                if (addresses != null) {
-                    Address address = addresses.get(0);
-                    city_edit_text.setText(address.getAddressLine(1));
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+                    try {
+                        List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                        if (addresses != null) {
+                            final Address address = addresses.get(0);
+                            if (city_edit_text != null) {
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        city_edit_text.setText(address.getAddressLine(1));
+                                    }
+                                });
+                            }
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            });
+            t.start();
         }
 
         @Override
