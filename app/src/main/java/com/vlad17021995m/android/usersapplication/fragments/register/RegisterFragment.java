@@ -211,6 +211,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
     }
 
     public void registerNewUser(){
+        LocalStorage storage = LocalStorage.getInstance(getActivity());
+        storage.checkExistEmail(mail_edit_text.getText().toString());
+        if (!storage.isMailExist()){
+            return;
+        }
         if (!LocalStorage.isEmailValid(mail_edit_text.getText().toString())){
             Toast.makeText(getActivity(), "не валидный почтовый адрес", Toast.LENGTH_SHORT).show();
             return;
@@ -227,7 +232,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
             Toast.makeText(getActivity(), "все поля обьязательны к заполнению", Toast.LENGTH_SHORT).show();
             return;
         }
-        LocalStorage storage = LocalStorage.getInstance(getActivity());
         String path = (imageUri == null) ? "" : imageUri.toString();
         int register_result = storage.registerAccount(mail_edit_text.getText().toString(), pass_edit_text.getText().toString(),
                 name_edit_text.getText().toString(), surname_edit_text.getText().toString(), father_edit_text.getText().toString(),

@@ -1,8 +1,6 @@
 package com.vlad17021995m.android.usersapplication.data.orm.entity;
 
 
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
 
 public class Place implements entity {
     private int id;

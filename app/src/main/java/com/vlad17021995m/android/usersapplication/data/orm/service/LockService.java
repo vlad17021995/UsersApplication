@@ -1,13 +1,7 @@
 package com.vlad17021995m.android.usersapplication.data.orm.service;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.jdbc.JdbcConnectionSource;
-import com.j256.ormlite.support.ConnectionSource;
 import com.vlad17021995m.android.usersapplication.data.gateway.DataBaseHelper;
 import com.vlad17021995m.android.usersapplication.data.orm.entity.Lock;
 import com.vlad17021995m.android.usersapplication.data.orm.entity.User;
